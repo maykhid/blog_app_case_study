@@ -1,0 +1,22 @@
+import 'package:blog_app_case_study/app/features/authors/data/data_source/local/authors_dao.dart';
+import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+class HiveAuthorsDao implements AuthorsDao {
+  final Box<AuthorsResponse> _authorsBox;
+
+  HiveAuthorsDao({required Box<AuthorsResponse> authorsBox})
+      : _authorsBox = authorsBox;
+
+  static const String _authorsKey = "__authors__key__";
+
+  @override
+  void cacheAuthors({required AuthorsResponse authors}) =>
+      _authorsBox.put(_authorsKey, authors);
+
+  @override
+  AuthorsResponse? getCachedAuthors() => _authorsBox.get(_authorsKey);
+
+  @override
+  bool get isAuthorsCacheAvailable => _authorsBox.isNotEmpty;
+}
