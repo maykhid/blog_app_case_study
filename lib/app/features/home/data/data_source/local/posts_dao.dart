@@ -1,7 +1,7 @@
-import '../../../../../shared/models/posts.dart';
+import '../../../../../shared/models/posts_response.dart';
 
 abstract class PostsDao {
-  void cachePosts({required Posts posts});
+  void cachePosts({required PostsResponse posts});
   bool get isPostsCacheAvailable;
-  Posts? getCachedPosts();
+  PostsResponse? getCachedPosts();
 }
