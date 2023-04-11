@@ -5,25 +5,25 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
 import '../../../home/data/data_source/local/posts_dao.dart';
-import '../../../home/data/data_source/remote/posts_api_client.dart';
+import '../../../home/data/data_source/remote/posts_remote_data_source.dart';
 
 class SearchRepository {
-  final PostsApiClient _postsApiClient;
-  final PostsDao _postDao;
+  final PostsRemoteDataSource _postsRemoteDataSource;
+  final PostsDao _postsDao;
 
   SearchRepository(
-      {required PostsApiClient postsApiClient, required PostsDao postDao})
-      : _postsApiClient = postsApiClient,
-        _postDao = postDao;
+      {required PostsRemoteDataSource postsRemoteDataSource, required PostsDao postsDao})
+      : _postsRemoteDataSource = postsRemoteDataSource,
+        _postsDao = postsDao;
 
   Future<Either<Failure, PostsResponse>> search(String searchTerm) async {
     try {
       List<Post> foundPosts = [];
 
-      final postsResponse = await _postsApiClient.getPosts();
+      final postsResponse = await _postsRemoteDataSource.getPosts();
 
       // store posts locally
-      _postDao.cachePosts(posts: postsResponse);
+      _postsDao.cachePosts(posts: postsResponse);
 
       // search title
       foundPosts = postsResponse.posts
@@ -42,7 +42,7 @@ class SearchRepository {
     try {
       List<Post> foundPosts = List<Post>.empty();
 
-      final cachedPosts = _postDao.getCachedPosts()!;
+      final cachedPosts = _postsDao.getCachedPosts()!;
 
       foundPosts = cachedPosts.posts
           .where((post) =>
@@ -59,7 +59,7 @@ class SearchRepository {
       seacrchLiveOrOfflinePosts(String searchTerm) async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isPostsCacheAvailable =
-        _postDao.isPostsCacheAvailable;
+        _postsDao.isPostsCacheAvailable;
 
     if (!hasConnection && isPostsCacheAvailable) {
       return searchOffline(searchTerm);

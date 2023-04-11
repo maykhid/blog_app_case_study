@@ -5,20 +5,20 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
 import '../data_source/local/posts_dao.dart';
-import '../data_source/remote/posts_api_client.dart';
+import '../data_source/remote/posts_remote_data_source.dart';
 
 class PostRepository {
-  final PostsApiClient _postsApiClient;
+  final PostsRemoteDataSource _postsRemoteDataSource;
   final PostsDao _postsDao;
 
   PostRepository(
-      {required PostsApiClient postsApiClient, required PostsDao postDao})
-      : _postsApiClient = postsApiClient,
+      {required PostsRemoteDataSource postsRemoteDataSource, required PostsDao postDao})
+      : _postsRemoteDataSource = postsRemoteDataSource,
         _postsDao = postDao;
 
   Future<Either<Failure, PostsResponse>> getPosts() async {
     try {
-      final postsResponse = await _postsApiClient.getPosts();
+      final postsResponse = await _postsRemoteDataSource.getPosts();
 
       // store posts locally
       _postsDao.cachePosts(posts: postsResponse);

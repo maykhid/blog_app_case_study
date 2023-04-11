@@ -16,6 +16,11 @@ class ServerFailure extends Failure {
       : super(code: code, message: message);
 }
 
+class ClientFailure extends Failure {
+  const ClientFailure({String? code, String? message})
+      : super(code: code, message: message);
+}
+
 class LocalStorageFailure extends Failure {
   const LocalStorageFailure({String? code, String? message})
       : super(code: code, message: message);
