@@ -1,14 +1,15 @@
 import 'dart:convert';
 
-import 'package:blog_app_case_study/app/features/authors/data/data_source/remote/authors_api_client.dart';
 import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
-import 'package:http/http.dart';
 
 import '../../../../../../core/data/data_source/remote/api_configs.dart';
+import '../../../../../../core/data/data_source/remote/client/client.dart';
+import '../../../../../../core/data/data_source/remote/client/response_handler.dart';
 import '../../../../../../core/model/error/exception.dart';
+import 'authors_remote_data_source.dart';
 
-class HttpAuthorsApiClient implements AuthorsApiClient {
-  final Client _client;
+class HttpAuthorsRemoteDataSource implements AuthorsRemoteDataSource {
+  final IClient _client;
 
   final Map<String, String> _headers = {
     "Accept": "application/json",
@@ -17,15 +18,15 @@ class HttpAuthorsApiClient implements AuthorsApiClient {
 
   final String _authorsPath = "/users";
 
-
-  HttpAuthorsApiClient({required Client client}) : _client = client;
+  HttpAuthorsRemoteDataSource({required IClient client}) : _client = client;
 
   @override
   Future<AuthorsResponse> getAuthors() async {
-     final url = Uri.https(ApiConfigs.jsonPlaceholderUrl, _authorsPath);
+    final url = Uri.https(ApiConfigs.jsonPlaceholderUrl, _authorsPath);
     try {
       final response = await _client.get(url, headers: _headers);
-      return AuthorsResponse.fromJson(jsonDecode(response.body));
+      final responseOrError = HttpResponseHandler().handleResponse(response);
+      return AuthorsResponse.fromJson(jsonDecode(responseOrError.body));
     } on ServerException catch (_) {
       rethrow;
     } catch (e) {

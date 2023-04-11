@@ -1,4 +1,3 @@
-import 'package:blog_app_case_study/app/features/authors/data/data_source/remote/authors_api_client.dart';
 import 'package:dartz/dartz.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -6,20 +5,21 @@ import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
 import '../../../../shared/models/authors_response.dart';
 import '../data_source/local/authors_dao.dart';
+import '../data_source/remote/authors_remote_data_source.dart';
 
 class AuthorsRepository {
-  final AuthorsApiClient _authorsApiClient;
+  final AuthorsRemoteDataSource _authorsRemoteDataSource;
   final AuthorsDao _authorsDao;
 
   AuthorsRepository(
-      {required AuthorsApiClient authorsApiClient,
+      {required AuthorsRemoteDataSource authorsRemoteDataSource,
       required AuthorsDao authorsDao})
-      : _authorsApiClient = authorsApiClient,
+      : _authorsRemoteDataSource = authorsRemoteDataSource,
         _authorsDao = authorsDao;
 
   Future<Either<Failure, AuthorsResponse>> getAuthors() async {
     try {
-      final authorsResponse = await _authorsApiClient.getAuthors();
+      final authorsResponse = await _authorsRemoteDataSource.getAuthors();
 
       // store authors locally
       _authorsDao.cacheAuthors(authors: authorsResponse);
