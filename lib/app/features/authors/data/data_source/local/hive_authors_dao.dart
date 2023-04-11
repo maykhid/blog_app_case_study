@@ -1,5 +1,6 @@
 import 'package:blog_app_case_study/app/features/authors/data/data_source/local/authors_dao.dart';
 import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
+import 'package:blog_app_case_study/core/model/error/exception.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveAuthorsDao implements AuthorsDao {
@@ -12,7 +13,7 @@ class HiveAuthorsDao implements AuthorsDao {
 
   @override
   void cacheAuthors({required AuthorsResponse authors}) =>
-      _authorsBox.put(_authorsKey, authors);
+      _authorsBox.put(_authorsKey, authors).onError((error, stackTrace) => throw LocalStorageException("Caching authors failed: ${error.toString()}"));
 
   @override
   AuthorsResponse? getCachedAuthors() => _authorsBox.get(_authorsKey);

@@ -17,12 +17,12 @@ class ClientException implements Exception {
 }
 
 class LocalStorageException implements Exception {
-  LocalStorageException(this.message, this.code);
+  LocalStorageException(this.message, [this.code]);
   final String? message;
   final int? code;
 
   @override
-  String toString() => 'LocalStorageException (Message >> $message - ErrorCode >> $code)';
+  String toString() => 'LocalStorageException (Message >> $message - ErrorCode >> $code )';
 }
 
 

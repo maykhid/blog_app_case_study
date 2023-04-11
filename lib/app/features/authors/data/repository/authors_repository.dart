@@ -11,9 +11,11 @@ class AuthorsRepository {
   final AuthorsApiClient _authorsApiClient;
   final AuthorsDao _authorsDao;
 
-  AuthorsRepository({required AuthorsApiClient authorsApiClient, required AuthorsDao authorsDao})
+  AuthorsRepository(
+      {required AuthorsApiClient authorsApiClient,
+      required AuthorsDao authorsDao})
       : _authorsApiClient = authorsApiClient,
-      _authorsDao = authorsDao;
+        _authorsDao = authorsDao;
 
   Future<Either<Failure, AuthorsResponse>> getAuthors() async {
     try {
@@ -23,8 +25,14 @@ class AuthorsRepository {
       _authorsDao.cacheAuthors(authors: authorsResponse);
 
       return Right(authorsResponse);
-    } on ServerException catch (_) {
-      return Left(ServerFailure(message: _.message));
+    } on ClientException catch (e) {
+      return Left(ClientFailure(message: e.message, code: e.code.toString()));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code.toString()));
+    } on LocalStorageException catch (e) {
+      return Left(LocalStorageFailure(message: e.toString()));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(message: e.toString(), code: '0'));
     }
   }
 

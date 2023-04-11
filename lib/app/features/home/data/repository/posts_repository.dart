@@ -12,7 +12,8 @@ class PostRepository {
   final PostsDao _postsDao;
 
   PostRepository(
-      {required PostsRemoteDataSource postsRemoteDataSource, required PostsDao postDao})
+      {required PostsRemoteDataSource postsRemoteDataSource,
+      required PostsDao postDao})
       : _postsRemoteDataSource = postsRemoteDataSource,
         _postsDao = postDao;
 
@@ -24,8 +25,14 @@ class PostRepository {
       _postsDao.cachePosts(posts: postsResponse);
 
       return Right(postsResponse);
-    } on ServerException catch (_) {
-      return Left(ServerFailure(message: _.message));
+    } on ClientException catch (e) {
+      return Left(ClientFailure(message: e.message, code: e.code.toString()));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code.toString()));
+    } on LocalStorageException catch (e) {
+      return Left(LocalStorageFailure(message: e.toString()));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(message: e.toString(), code: '0'));
     }
   }
 
@@ -33,8 +40,10 @@ class PostRepository {
     try {
       final cachedPosts = _postsDao.getCachedPosts()!;
       return Right(cachedPosts);
-    } on Exception catch (_) {
-      return Left(LocalStorageFailure(message: _.toString()));
+    } on LocalStorageException catch (e) {
+      return Left(LocalStorageFailure(message: e.toString()));
+    } on Exception catch (e) {
+      return Left(LocalStorageFailure(message: e.toString()));
     }
   }
 

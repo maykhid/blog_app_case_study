@@ -25,3 +25,8 @@ class LocalStorageFailure extends Failure {
   const LocalStorageFailure({String? code, String? message})
       : super(code: code, message: message);
 }
+
+class UnexpectedFailure extends Failure {
+  const UnexpectedFailure({String? code, String? message})
+      : super(code: code, message: message);
+}

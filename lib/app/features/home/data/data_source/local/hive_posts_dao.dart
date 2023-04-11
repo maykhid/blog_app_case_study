@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../../../../core/model/error/exception.dart';
 import '../../../../../shared/models/posts_response.dart';
 import 'posts_dao.dart';
 
@@ -12,7 +13,8 @@ class HivePostDao implements PostsDao {
 
   @override
   void cachePosts({required PostsResponse posts}) =>
-      _postsBox.put(_postKey, posts);
+      _postsBox.put(_postKey, posts).onError(
+          (error, stackTrace) => throw LocalStorageException("Caching posts failed: ${error.toString()}"));
 
   @override
   PostsResponse? getCachedPosts() => _postsBox.get(_postKey);

@@ -1,4 +1,5 @@
 import 'package:blog_app_case_study/app/shared/models/posts_response.dart';
+import 'package:blog_app_case_study/core/model/error/exception.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/model/error/failure.dart';
@@ -22,16 +23,20 @@ class BookmarkRepository {
   void bookmarkPost(Post post) async {
     try {
       _bookmarkDao.bookmarkPost(post: post);
-    } on Exception catch (e) {
+    } on LocalStorageException catch (e) {
       throw LocalStorageFailure(message: e.toString());
+    } on Exception catch (e) {
+      throw UnexpectedFailure(message: e.toString());
     }
   }
 
   void clearBookmarkedPost(int index) async {
     try {
       _bookmarkDao.clearBookmarkedPost(index: index);
-    } on Exception catch (e) {
+    } on LocalStorageException catch (e) {
       throw LocalStorageFailure(message: e.toString());
+    } on Exception catch (e) {
+      throw UnexpectedFailure(message: e.toString());
     }
   }
 }
