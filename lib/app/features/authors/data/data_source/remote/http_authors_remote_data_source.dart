@@ -5,7 +5,6 @@ import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
 import '../../../../../../core/data/data_source/remote/api_configs.dart';
 import '../../../../../../core/data/data_source/remote/client/client.dart';
 import '../../../../../../core/data/data_source/remote/client/response_handler.dart';
-import '../../../../../../core/model/error/exception.dart';
 import 'authors_remote_data_source.dart';
 
 class HttpAuthorsRemoteDataSource implements AuthorsRemoteDataSource {
@@ -27,8 +26,6 @@ class HttpAuthorsRemoteDataSource implements AuthorsRemoteDataSource {
       final response = await _client.get(url, headers: _headers);
       final responseOrError = HttpResponseHandler().handleResponse(response);
       return AuthorsResponse.fromJson(jsonDecode(responseOrError.body));
-    } on ServerException catch (_) {
-      rethrow;
     } catch (e) {
       rethrow;
     }
