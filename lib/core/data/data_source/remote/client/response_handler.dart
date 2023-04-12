@@ -8,9 +8,9 @@ abstract class ResponseHandler<T> {
 }
 
 class HttpResponseHandler implements ResponseHandler<http.Response> {
-
+  /// [http.Response] is the return type and [handleResponse]'s parameter
   @override
-  http.Response handleResponse(http.Response response) {
+  handleResponse(response) {
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       return response;
     } else if (response.statusCode >= 400 && response.statusCode <= 499) {
