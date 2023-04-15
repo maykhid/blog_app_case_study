@@ -11,7 +11,7 @@ class BookmarkRepository {
   BookmarkRepository({required BookmarkDao bookmarkDao})
       : _bookmarkDao = bookmarkDao;
 
-  Future<Either<Failure, PostsResponse>> getAllBookmarkedPosts() async {
+  Future<Either<Failure, PostsResponse>> call() async {
     try {
       final bookmarkedPosts = _bookmarkDao.getAllBookmarkedPosts();
       return Right(bookmarkedPosts!);

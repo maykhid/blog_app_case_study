@@ -45,7 +45,7 @@ class AuthorsRepository {
     }
   }
 
-  Future<Either<Failure, AuthorsResponse>> getLiveOrCachedAuthors() async {
+  Future<Either<Failure, AuthorsResponse>> call() async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isAuthorsCacheAvailable = _authorsDao.isAuthorsCacheAvailable;
 

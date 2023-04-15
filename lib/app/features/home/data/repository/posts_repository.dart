@@ -47,7 +47,7 @@ class PostRepository {
     }
   }
 
-  Future<Either<Failure, PostsResponse>> getLiveOrCachedPosts() async {
+  Future<Either<Failure, PostsResponse>> call() async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isPostsCacheAvailable = _postsDao.isPostsCacheAvailable;
 

@@ -56,7 +56,7 @@ class SearchRepository {
   }
 
    Future<Either<Failure, PostsResponse>>
-      seacrchLiveOrOfflinePosts(String searchTerm) async {
+      call(String searchTerm) async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isPostsCacheAvailable =
         _postsDao.isPostsCacheAvailable;
