@@ -4,10 +4,11 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
+import '../../../../shared/repository/repository.dart';
 import '../data_source/local/posts_dao.dart';
 import '../data_source/remote/posts_remote_data_source.dart';
 
-class PostRepository {
+class PostRepository extends IRepository {
   final PostsRemoteDataSource _postsRemoteDataSource;
   final PostsDao _postsDao;
 
@@ -47,7 +48,8 @@ class PostRepository {
     }
   }
 
-  Future<Either<Failure, PostsResponse>> call() async {
+  @override
+  Future<Either<Failure, PostsResponse>> call([String? searchTerm]) async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isPostsCacheAvailable = _postsDao.isPostsCacheAvailable;
 

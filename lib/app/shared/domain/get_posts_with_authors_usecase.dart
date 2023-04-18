@@ -1,6 +1,8 @@
+import 'package:blog_app_case_study/app/shared/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../core/model/error/failure.dart';
+import '../../../core/model/params/params.dart';
 import '../../../core/utils/typedefs.dart';
 import '../models/authors_response.dart';
 import '../models/posts_response.dart';
@@ -44,25 +46,25 @@ import '../models/posts_response.dart';
 // void main() {
 
 // }
-class GetPostsWithAuthorsUseCase<R1, R2> {
-  /// [R1] is the repository for authors
-  /// [R2] is the repository for posts
+class GetPostsWithAuthorsUseCase<RepositoryAuthorResponse extends IRepository, RepositoryPostResponse extends IRepository> {
+  /// [RepositoryAuthorResponse] is the repository that returns authors
+  /// [RepositoryPostResponse] is the repository that returns posts
   GetPostsWithAuthorsUseCase({
-    required R1 authorsRepository,
-    required R2 postsRepository,
+    required RepositoryAuthorResponse authorsRepository,
+    required RepositoryPostResponse postsRepository,
   })  : _authorsRepository = authorsRepository,
         _postsRepository = postsRepository;
 
-  final R1 _authorsRepository;
-  final R2 _postsRepository;
+  final RepositoryAuthorResponse _authorsRepository;
+  final RepositoryPostResponse _postsRepository;
 
-  Future<Either<Failure, PostsWithAuthors>> call([String? searchTerm]) async {
+  Future<Either<Failure, PostsWithAuthors>> call(Params params) async {
     try {
       final Either<Failure, AuthorsResponse> authorsOrFailure =
-          await _authorsRepository!();
+          await _authorsRepository();
 
       final Either<Failure, PostsResponse> postsOrFailure =
-          await _postsRepository!(searchTerm);
+          await _postsRepository(params.searchTerm);
 
       if (authorsOrFailure.isLeft()) {
         final left = authorsOrFailure.fold(

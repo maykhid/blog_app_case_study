@@ -3,15 +3,17 @@ import 'package:blog_app_case_study/core/model/error/exception.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/model/error/failure.dart';
+import '../../../../shared/repository/repository.dart';
 import '../data_source/local/bookmark_dao.dart';
 
-class BookmarkRepository {
+class BookmarkRepository extends IRepository {
   final BookmarkDao _bookmarkDao;
 
   BookmarkRepository({required BookmarkDao bookmarkDao})
       : _bookmarkDao = bookmarkDao;
 
-  Future<Either<Failure, PostsResponse>> call() async {
+  @override
+  Future<Either<Failure, PostsResponse>> call([String? search]) async {
     try {
       final bookmarkedPosts = _bookmarkDao.getAllBookmarkedPosts();
       return Right(bookmarkedPosts!);

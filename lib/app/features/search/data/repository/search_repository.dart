@@ -1,4 +1,5 @@
 import 'package:blog_app_case_study/app/shared/models/posts_response.dart';
+import 'package:blog_app_case_study/app/shared/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -7,7 +8,7 @@ import '../../../../../core/model/error/failure.dart';
 import '../../../home/data/data_source/local/posts_dao.dart';
 import '../../../home/data/data_source/remote/posts_remote_data_source.dart';
 
-class SearchRepository {
+class SearchRepository extends IRepository{
   final PostsRemoteDataSource _postsRemoteDataSource;
   final PostsDao _postsDao;
 
@@ -54,16 +55,16 @@ class SearchRepository {
       return Left(ServerFailure(message: _.message));
     }
   }
-
+  @override
    Future<Either<Failure, PostsResponse>>
-      call(String searchTerm) async {
+      call([String? searchTerm]) async {
     bool hasConnection = await InternetConnectionChecker().hasConnection;
     bool isPostsCacheAvailable =
         _postsDao.isPostsCacheAvailable;
 
     if (!hasConnection && isPostsCacheAvailable) {
-      return searchOffline(searchTerm);
+      return searchOffline(searchTerm!);
     }
-    return search(searchTerm);
+    return search(searchTerm!);
   }
 }

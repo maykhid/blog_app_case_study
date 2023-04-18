@@ -1,3 +1,4 @@
+import 'package:blog_app_case_study/core/model/params/params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../shared/domain/get_posts_with_authors_usecase.dart';
@@ -13,12 +14,11 @@ class BookmarkPostsCubit extends Cubit<BookmarkPostsState> {
       : _getPostsWithAuthorsUseCase = getPostsWithAuthorsUseCase,
         super(const BookmarkPostsState.unknown());
 
-  final GetPostsWithAuthorsUseCase<AuthorsRepository, BookmarkRepository>
-      _getPostsWithAuthorsUseCase;
+  final GetPostsWithAuthorsUseCase _getPostsWithAuthorsUseCase;
 
   Future<void> getBookmarkedPosts() async {
     emit(const BookmarkPostsState.processing());
-    final response = await _getPostsWithAuthorsUseCase();
+    final response = await _getPostsWithAuthorsUseCase(NoParams());
     emit(response.fold(
         (error) => BookmarkPostsState.failed(message: error.message),
         (res) => BookmarkPostsState.done(bookmarkedPostsUsers: res)));
