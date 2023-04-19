@@ -1,5 +1,3 @@
-
-
 import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/ui/extensions/sized_context.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,8 @@ import '../../../bookmark/ui/cubits/bookmarkedPosts/bookmarked_posts_cubit.dart'
 import '../../../bookmark/ui/cubits/bookmarkedPosts/boookmarked_posts_state.dart';
 
 class PostView extends StatefulWidget {
-  const PostView({super.key, required this.post, required this.authorsResponse});
+  const PostView(
+      {super.key, required this.post, required this.authorsResponse});
 
   final Post post;
   final AuthorsResponse authorsResponse;
@@ -68,8 +67,10 @@ class _PostViewState extends State<PostView> {
             ),
 
             BlocProvider<BookmarkPostsCubit>(
-              create: (ctx) => BookmarkPostsCubit(getPostsWithAuthorsUseCase: di())
-                ..getBookmarkedPosts(),
+              create: (ctx) => BookmarkPostsCubit(
+                getPostsWithAuthorsUseCase: di(),
+                bookmarkRepository: di(),
+              )..getBookmarkedPosts(),
               child: BlocConsumer<BookmarkPostsCubit, BookmarkPostsState>(
                   listener: (context, state) {
                 // listen and call when needed
@@ -117,7 +118,7 @@ class _PostViewState extends State<PostView> {
                             IconButton(
                               // onPressed: () => SocialShare.shareOptions(
                               //     'Read this blog post by: ${users.users[post.userId - 1].name}\n\n ${post.body} \n\n https://blogpost.inapp.url'),
-                              onPressed: (){},
+                              onPressed: () {},
                               icon: const Icon(
                                 Icons.share,
                                 color: Colors.teal,
@@ -130,13 +131,13 @@ class _PostViewState extends State<PostView> {
 
                             // bookmark button
                             IconButton(
-                              onPressed: () {},
-                                  // _isPostBookmarked(bookmarkedPosts)
-                                  //     ? _handleRemoveBookmark(
-                                  //         context.read<BookmarkPostsCubit>(),
-                                  //         bookmarkedPosts)
-                                  //     : _handleBookmark(
-                                  //         context.read<BookmarkPostsCubit>()),
+                              onPressed: () =>
+                                  _isPostBookmarked(bookmarkedPosts)
+                                      ? _handleRemoveBookmark(
+                                          context.read<BookmarkPostsCubit>(),
+                                          bookmarkedPosts)
+                                      : _handleBookmark(
+                                          context.read<BookmarkPostsCubit>()),
                               icon: Icon(
                                 Icons.bookmark,
                                 size: 30,
@@ -173,14 +174,14 @@ class _PostViewState extends State<PostView> {
 
   bool _isPostBookmarked(posts) => posts.contains(post);
 
-  // void _handleBookmark(BookmarkPostsCubit bookmarkCubit) => bookmarkCubit
-  //   ..bookmarkPost(post)
-  //   ..getBookmarkedPosts();
+  void _handleBookmark(BookmarkPostsCubit bookmarkCubit) => bookmarkCubit
+    ..bookmarkPost(post)
+    ..getBookmarkedPosts();
 
   _handleRemoveBookmark(BookmarkPostsCubit cubit, List<Post> posts) {
-    // int index = posts.indexWhere((p) => p == post);
-    // cubit
-    //   ..clearBookmarkedPost(index)
-    //   ..getBookmarkedPosts();
+    int index = posts.indexWhere((p) => p == post);
+    cubit
+      ..clearBookmarkedPost(index)
+      ..getBookmarkedPosts();
   }
 }

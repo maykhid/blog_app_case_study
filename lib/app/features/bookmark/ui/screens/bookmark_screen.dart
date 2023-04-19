@@ -1,4 +1,3 @@
-
 import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +22,8 @@ class BookmarkScreen extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 8),
         child: BlocProvider<BookmarkPostsCubit>(
-          create: (ctx) => BookmarkPostsCubit( getPostsWithAuthorsUseCase: di())
+          create: (ctx) => BookmarkPostsCubit(
+              getPostsWithAuthorsUseCase: di(), bookmarkRepository: di())
             ..getBookmarkedPosts(),
           child: BlocConsumer<BookmarkPostsCubit, BookmarkPostsState>(
             listener: (context, state) {
@@ -75,8 +75,8 @@ class BookmarkScreen extends StatelessWidget {
                       showBookmarkedStatus: true,
                       post: bookmarkedPosts[index],
                       authorsResponse: authors,
-                      // onBookmarkPressed: () => _handleRemoveBookmark(
-                      //     context.read<BookmarkPostsCubit>(), index),
+                      onBookmarkPressed: () => _handleRemoveBookmark(
+                          context.read<BookmarkPostsCubit>(), index),
                     ),
                   );
 
@@ -90,7 +90,7 @@ class BookmarkScreen extends StatelessWidget {
     );
   }
 
-  // _handleRemoveBookmark(BookmarkPostsCubit cubit, int index) => cubit
-  //   ..clearBookmarkedPost(index)
-  //   ..getBookmarkedPosts();
+  _handleRemoveBookmark(BookmarkPostsCubit cubit, int index) => cubit
+    ..clearBookmarkedPost(index)
+    ..getBookmarkedPosts();
 }

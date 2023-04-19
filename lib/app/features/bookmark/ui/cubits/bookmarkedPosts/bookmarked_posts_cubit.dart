@@ -2,19 +2,24 @@ import 'package:blog_app_case_study/core/model/params/params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../shared/domain/get_posts_with_authors_usecase.dart';
+import '../../../../../shared/models/posts_response.dart';
 import '../../../../authors/data/repository/authors_repository.dart';
 import '../../../data/repository/bookmark_repository.dart';
 import 'boookmarked_posts_state.dart';
 
 class BookmarkPostsCubit extends Cubit<BookmarkPostsState> {
-  BookmarkPostsCubit(
-      {required GetPostsWithAuthorsUseCase<AuthorsRepository,
-              BookmarkRepository>
-          getPostsWithAuthorsUseCase})
-      : _getPostsWithAuthorsUseCase = getPostsWithAuthorsUseCase,
-        super(const BookmarkPostsState.unknown());
+  BookmarkPostsCubit({
+    required GetPostsWithAuthorsUseCase<AuthorsRepository, BookmarkRepository>
+        getPostsWithAuthorsUseCase,
+    required BookmarkRepository bookmarkRepository,
+  })  : _getPostsWithAuthorsUseCase = getPostsWithAuthorsUseCase,
+        _bookmarkRepository = bookmarkRepository,
+        super(
+          const BookmarkPostsState.unknown(),
+        );
 
   final GetPostsWithAuthorsUseCase _getPostsWithAuthorsUseCase;
+  final BookmarkRepository _bookmarkRepository;
 
   Future<void> getBookmarkedPosts() async {
     emit(const BookmarkPostsState.processing());
@@ -24,8 +29,8 @@ class BookmarkPostsCubit extends Cubit<BookmarkPostsState> {
         (res) => BookmarkPostsState.done(bookmarkedPostsUsers: res)));
   }
 
-  // void bookmarkPost(Post post) => _bookmarkRepository.bookmarkPost(post);
+  void bookmarkPost(Post post) => _bookmarkRepository.bookmarkPost(post);
 
-  // void clearBookmarkedPost(int index) =>
-  //     _bookmarkRepository.clearBookmarkedPost(index);
+  void clearBookmarkedPost(int index) =>
+      _bookmarkRepository.clearBookmarkedPost(index);
 }
