@@ -1,10 +1,10 @@
-import 'package:blog_app_case_study/app/shared/models/posts_response.dart';
-import 'package:blog_app_case_study/app/shared/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
+import '../../../../shared/data/models/posts_response.dart';
+import '../../../../shared/data/repository/repository.dart';
 import '../../../home/data/data_source/local/posts_dao.dart';
 import '../../../home/data/data_source/remote/posts_remote_data_source.dart';
 

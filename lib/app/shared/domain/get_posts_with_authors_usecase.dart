@@ -1,11 +1,12 @@
-import 'package:blog_app_case_study/app/shared/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../core/model/error/failure.dart';
 import '../../../core/model/params/params.dart';
 import '../../../core/utils/typedefs.dart';
-import '../models/authors_response.dart';
-import '../models/posts_response.dart';
+import '../data/models/authors_response.dart';
+import '../data/models/posts_response.dart';
+import '../data/repository/repository.dart';
+
 
 // abstract class GetPostsWithAuthorsUseCase<R1, R2> {
 //   GetPostsWithAuthorsUseCase(

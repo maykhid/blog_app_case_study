@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../../../../core/model/error/exception.dart';
-import '../../../../../shared/models/posts_response.dart';
+import '../../../../../shared/data/models/posts_response.dart';
 import 'bookmark_dao.dart';
 
 class HiveBookmarkDao implements BookmarkDao {

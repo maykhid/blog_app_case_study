@@ -1,10 +1,10 @@
-import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/dependency_injector.dart';
 import '../../../../../core/utils/enums.dart';
 
+import '../../../../shared/data/models/authors_response.dart';
 import '../../../home/ui/widgets/postcard_widget.dart';
 import '../cubits/bookmarkedPosts/bookmarked_posts_cubit.dart';
 import '../cubits/bookmarkedPosts/boookmarked_posts_state.dart';

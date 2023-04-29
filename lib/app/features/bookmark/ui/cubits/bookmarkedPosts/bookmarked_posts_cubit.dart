@@ -1,8 +1,8 @@
 import 'package:blog_app_case_study/core/model/params/params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../shared/data/models/posts_response.dart';
 import '../../../../../shared/domain/get_posts_with_authors_usecase.dart';
-import '../../../../../shared/models/posts_response.dart';
 import '../../../../authors/data/repository/authors_repository.dart';
 import '../../../data/repository/bookmark_repository.dart';
 import 'boookmarked_posts_state.dart';

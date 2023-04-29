@@ -4,7 +4,6 @@ import 'package:blog_app_case_study/app/features/authors/data/data_source/remote
 import 'package:blog_app_case_study/app/features/authors/data/data_source/remote/http_authors_remote_data_source.dart';
 import 'package:blog_app_case_study/app/features/home/data/data_source/remote/posts_remote_data_source.dart';
 import 'package:blog_app_case_study/app/shared/domain/get_posts_with_authors_usecase.dart';
-import 'package:blog_app_case_study/app/shared/models/authors_response.dart';
 import 'package:blog_app_case_study/core/data/data_source/remote/client/client.dart';
 import 'package:blog_app_case_study/core/data/data_source/remote/client/http_client.dart';
 import 'package:get_it/get_it.dart';
@@ -21,7 +20,8 @@ import '../app/features/home/data/data_source/remote/http_posts_remote_data_sour
 import '../app/features/home/data/repository/posts_repository.dart';
 import '../app/features/search/data/repository/search_repository.dart';
 import '../app/features/search/ui/cubits/search_cubit.dart';
-import '../app/shared/models/posts_response.dart';
+import '../app/shared/data/models/authors_response.dart';
+import '../app/shared/data/models/posts_response.dart';
 import 'router/navigation_service.dart';
 
 GetIt di = GetIt.instance;

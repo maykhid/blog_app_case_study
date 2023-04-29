@@ -1,9 +1,9 @@
 import 'package:blog_app_case_study/app/shared/ui/extensions/sized_context.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../shared/data/models/authors_response.dart';
+import '../../../../shared/data/models/posts_response.dart';
 import '../../../../shared/ui/widgets/app_spacing.dart';
-import '../../../../shared/models/authors_response.dart';
-import '../../../../shared/models/posts_response.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({

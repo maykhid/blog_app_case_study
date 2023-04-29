@@ -1,9 +1,9 @@
-import 'package:blog_app_case_study/app/shared/models/posts_response.dart';
 import 'package:blog_app_case_study/core/model/error/exception.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/model/error/failure.dart';
-import '../../../../shared/repository/repository.dart';
+import '../../../../shared/data/models/posts_response.dart';
+import '../../../../shared/data/repository/repository.dart';
 import '../data_source/local/bookmark_dao.dart';
 
 class BookmarkRepository extends IRepository {

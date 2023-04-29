@@ -5,7 +5,7 @@ import 'package:blog_app_case_study/core/data/data_source/remote/api_configs.dar
 import 'package:blog_app_case_study/core/data/data_source/remote/client/response_handler.dart';
 
 import '../../../../../../core/data/data_source/remote/client/client.dart';
-import '../../../../../shared/models/posts_response.dart';
+import '../../../../../shared/data/models/posts_response.dart';
 
 class HttpPostsRemoteDataSource implements PostsRemoteDataSource {
   // Client from the http package

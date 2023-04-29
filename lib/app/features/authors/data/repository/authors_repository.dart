@@ -3,8 +3,9 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../../core/model/error/exception.dart';
 import '../../../../../core/model/error/failure.dart';
-import '../../../../shared/models/authors_response.dart';
-import '../../../../shared/repository/repository.dart';
+
+import '../../../../shared/data/models/authors_response.dart';
+import '../../../../shared/data/repository/repository.dart';
 import '../data_source/local/authors_dao.dart';
 import '../data_source/remote/authors_remote_data_source.dart';
 

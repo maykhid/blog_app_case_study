@@ -1,4 +1,4 @@
-import '../../../../../shared/models/posts_response.dart';
+import '../../../../../shared/data/models/posts_response.dart';
 
 abstract class BookmarkDao {
   void bookmarkPost({required Post post});
