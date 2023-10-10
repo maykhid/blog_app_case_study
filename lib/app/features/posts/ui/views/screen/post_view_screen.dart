@@ -5,7 +5,7 @@ import 'package:blog_app_case_study/app/shared/ui/widgets/spacing.dart';
 import 'package:flutter/material.dart';
 
 class PostView extends StatefulWidget {
-  const PostView({super.key, required this.post, required this.authors});
+  const PostView({required this.post, required this.authors, super.key});
 
   final Post post;
   final List<Author> authors;
@@ -53,7 +53,7 @@ class _PostViewState extends State<PostView> {
                       image: AssetImage(
                         'assets/images/dummy.jpg',
                       ),
-                      fit: BoxFit.cover)),
+                      fit: BoxFit.cover,),),
             ),
 
             const VerticalSpace(
@@ -67,7 +67,6 @@ class _PostViewState extends State<PostView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
@@ -78,7 +77,7 @@ class _PostViewState extends State<PostView> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700),
+                              fontSize: 20, fontWeight: FontWeight.w700,),
                         ),
                       ),
                       Text(
@@ -152,7 +151,7 @@ class _PostViewState extends State<PostView> {
     );
   }
 
-  bool _isPostBookmarked(posts) => posts.contains(post);
+  // bool _isPostBookmarked(posts) => posts.contains(post);
 
   // void _handleBookmark(BookmarkPostsCubit bookmarkCubit) => bookmarkCubit
   //   ..bookmarkPost(post)

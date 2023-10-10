@@ -13,7 +13,7 @@ class Resource<T> {
 
   final T? data;
 
-   // Getter method to access the error message
+  // Getter method to access the error message
   String? get errorMessage {
     if (isFailure) {
       return (this as _Failure).errorMessage;
@@ -23,7 +23,7 @@ class Resource<T> {
 }
 
 class _Success<T> extends Resource<T> {
-  _Success(T? data) : super._(data);
+  _Success(super.data) : super._();
 }
 
 class _Loading<T> extends Resource<T> {

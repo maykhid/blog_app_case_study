@@ -20,7 +20,7 @@ extension SizedContext on BuildContext {
 
   /// Returns diagonal screen pixels
   double get diagonal {
-    final Size s = size;
+    final s = size;
     return sqrt((s.width * s.width) + (s.height * s.height));
   }
 }

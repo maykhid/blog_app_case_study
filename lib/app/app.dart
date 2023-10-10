@@ -1,8 +1,8 @@
+import 'package:blog_app_case_study/app/shared/ui/widgets/nav_bar.dart';
 import 'package:blog_app_case_study/core/di.dart';
+import 'package:blog_app_case_study/core/router/navigation_service.dart';
 import 'package:flutter/material.dart';
 
-import '../core/router/navigation_service.dart';
-import 'shared/ui/widgets/nav_bar.dart';
 
 class BlogApp extends StatelessWidget {
   const BlogApp({super.key});

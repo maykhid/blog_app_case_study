@@ -5,10 +5,10 @@ import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/data/resource.dart';
 
 class BlogPostsRepository {
-  const BlogPostsRepository(
-      {required BlogPostsRemoteDataSource blogPostsRemoteDataSource,
-      required BlogPostsLocalDataSource blogPostsLocalDataSource})
-      : _blogPostsRemoteDataSource = blogPostsRemoteDataSource,
+  const BlogPostsRepository({
+    required BlogPostsRemoteDataSource blogPostsRemoteDataSource,
+    required BlogPostsLocalDataSource blogPostsLocalDataSource,
+  })  : _blogPostsRemoteDataSource = blogPostsRemoteDataSource,
         _blogPostsLocalDataSource = blogPostsLocalDataSource;
 
   final BlogPostsRemoteDataSource _blogPostsRemoteDataSource;
@@ -18,7 +18,7 @@ class BlogPostsRepository {
     try {
       final response = await _blogPostsRemoteDataSource.getPosts();
       _blogPostsLocalDataSource.cachePosts(posts: response);
-       
+
       return Resource.success(_blogPostsLocalDataSource.getCachedPosts());
     } catch (e) {
       if (_blogPostsLocalDataSource.isPostsCacheAvailable) {
@@ -32,7 +32,7 @@ class BlogPostsRepository {
     try {
       final response = await _blogPostsRemoteDataSource.getAuthors();
       _blogPostsLocalDataSource.cacheAuthors(authors: response);
-      
+
       return Resource.success(_blogPostsLocalDataSource.getCachedAuthors());
     } catch (e) {
       if (_blogPostsLocalDataSource.isAuthorsCacheAvailable) {

@@ -12,21 +12,17 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure({String? code, String? message})
-      : super(code: code, message: message);
+  const ServerFailure({super.code, super.message});
 }
 
 class ClientFailure extends Failure {
-  const ClientFailure({String? code, String? message})
-      : super(code: code, message: message);
+  const ClientFailure({super.code, super.message});
 }
 
 class LocalStorageFailure extends Failure {
-  const LocalStorageFailure({String? code, String? message})
-      : super(code: code, message: message);
+  const LocalStorageFailure({super.code, super.message});
 }
 
 class UnexpectedFailure extends Failure {
-  const UnexpectedFailure({String? code, String? message})
-      : super(code: code, message: message);
+  const UnexpectedFailure({super.code, super.message});
 }

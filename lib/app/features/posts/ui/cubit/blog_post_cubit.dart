@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'blog_post_state.dart';
 
 class BlogPostsCubit extends Cubit<BlogPostsState> {
-  BlogPostsCubit(
-      {required GetBlogPostsWithAuthorsUseCase getPostsWithAuthorsUseCase})
-      : _getPostsWithAuthorsUseCase = getPostsWithAuthorsUseCase,
+  BlogPostsCubit({
+    required GetBlogPostsWithAuthorsUseCase getPostsWithAuthorsUseCase,
+  })  : _getPostsWithAuthorsUseCase = getPostsWithAuthorsUseCase,
         super(const BlogPostsState.unknown());
 
   final GetBlogPostsWithAuthorsUseCase _getPostsWithAuthorsUseCase;
@@ -23,8 +23,5 @@ class BlogPostsCubit extends Cubit<BlogPostsState> {
     } else {
       emit(BlogPostsState.done(response: response.data!));
     }
-
-    // emit(response.fold((error) => BlogPostsState.failed(message: error.message),
-    //     (res) => BlogPostsState.done(response: res)));
   }
 }

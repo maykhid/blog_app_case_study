@@ -14,21 +14,28 @@ import 'package:hive_flutter/hive_flutter.dart';
 GetIt di = GetIt.instance;
 
 Future<void> setup() async {
-  di.registerLazySingleton<BlogApi>(() => HttpBlogApi());
+  di..registerLazySingleton<BlogApi>(HttpBlogApi.new)
 
-  di.registerLazySingleton<BlogPostsRemoteDataSource>(
-      () => BlogPostsRemoteDataSource(blogApi: di()));
+  ..registerLazySingleton<BlogPostsRemoteDataSource>(
+    () => BlogPostsRemoteDataSource(blogApi: di()),
+  )
 
-  di.registerLazySingleton<BlogPostsLocalDataSource>(
-      () => HiveBlogPostsLocalDataSource(postsBox: di(), authorsBox: di()));
+  ..registerLazySingleton<BlogPostsLocalDataSource>(
+    () => HiveBlogPostsLocalDataSource(postsBox: di(), authorsBox: di()),
+  )
 
-  di.registerLazySingleton<BlogPostsRepository>(() => BlogPostsRepository(
-      blogPostsRemoteDataSource: di(), blogPostsLocalDataSource: di()));
+  ..registerLazySingleton<BlogPostsRepository>(
+    () => BlogPostsRepository(
+      blogPostsRemoteDataSource: di(),
+      blogPostsLocalDataSource: di(),
+    ),
+  )
 
-  di.registerLazySingleton<GetBlogPostsWithAuthorsUseCase>(
-      () => GetBlogPostsWithAuthorsUseCase(
-            blogPostsRepository: di(),
-          ));
+  ..registerLazySingleton<GetBlogPostsWithAuthorsUseCase>(
+    () => GetBlogPostsWithAuthorsUseCase(
+      blogPostsRepository: di(),
+    ),
+  );
 
   // --- open and register posts box
   final postsBox = await Hive.openBox<PostsResponse>('postsBox');
@@ -36,8 +43,8 @@ Future<void> setup() async {
 
   // --- open and register users box
   final usersBox = await Hive.openBox<AuthorsResponse>('usersBox');
-  di.registerLazySingleton(() => usersBox);
+  di..registerLazySingleton(() => usersBox)
 
   // core
-  di.registerLazySingleton(() => NavigationService());
+  ..registerLazySingleton(NavigationService.new);
 }

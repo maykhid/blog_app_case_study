@@ -1,5 +1,3 @@
-
-
 import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/app/shared/ui/extensions/sized_context.dart';
@@ -8,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({
-    super.key,
-    this.showBookmarkedStatus = false,
     required this.post,
     required this.authors,
+    super.key,
+    this.showBookmarkedStatus = false,
     this.onBookmarkPressed,
   });
 
@@ -33,21 +31,22 @@ class PostCard extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // pic view
               Container(
                 height: 100,
                 width: 120,
                 decoration: BoxDecoration(
-                    border: Border.all(),
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8),
-                    image: const DecorationImage(
-                        image: AssetImage(
-                          'assets/images/dummy.jpg',
-                        ),
-                        fit: BoxFit.cover)),
+                  border: Border.all(),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(8),
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      'assets/images/dummy.jpg',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
 
               const HorizontalSpace(
@@ -75,22 +74,28 @@ class PostCard extends StatelessWidget {
                   const VerticalSpace(
                     size: 5,
                   ),
-                  Text(authors[post.userId - 1].name,
-                      style: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.w500)),
+                  Text(
+                    authors[post.userId - 1].name,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
 
               const Spacer(),
 
-              showBookmarkedStatus
-                  ? IconButton(
-                      onPressed: onBookmarkPressed ?? () {},
-                      icon: const Icon(
-                        Icons.bookmark,
-                        color: Colors.teal,
-                      ))
-                  : const SizedBox(),
+              if (showBookmarkedStatus)
+                IconButton(
+                  onPressed: onBookmarkPressed ?? () {},
+                  icon: const Icon(
+                    Icons.bookmark,
+                    color: Colors.teal,
+                  ),
+                )
+              else
+                const SizedBox(),
             ],
           ),
 

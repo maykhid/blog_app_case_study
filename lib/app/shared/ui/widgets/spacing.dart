@@ -1,16 +1,15 @@
 import 'package:blog_app_case_study/app/shared/ui/extensions/sized_context.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Key, SizedBox, StatelessWidget, Widget;
+    show BuildContext, SizedBox, StatelessWidget, Widget;
 
 class VerticalSpace extends StatelessWidget {
-  final double size;
-  final SizeUnit unit;
-
   const VerticalSpace({
-    Key? key,
+    super.key,
     this.size = 8.0,
     this.unit = SizeUnit.pixel,
-  }) : super(key: key);
+  });
+  final double size;
+  final SizeUnit unit;
   @override
   Widget build(BuildContext context) {
     final screenHeight = context.height;
@@ -21,14 +20,13 @@ class VerticalSpace extends StatelessWidget {
 }
 
 class HorizontalSpace extends StatelessWidget {
-  final double size;
-  final SizeUnit unit;
-
   const HorizontalSpace({
-    Key? key,
+    super.key,
     this.size = 8.0,
     this.unit = SizeUnit.pixel,
-  }) : super(key: key);
+  });
+  final double size;
+  final SizeUnit unit;
   @override
   Widget build(BuildContext context) {
     final screenWidth = context.width;

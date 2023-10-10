@@ -4,7 +4,7 @@ class NavigationService {
   final GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
   GlobalKey<NavigatorState> get navigationKey => _navigationKey;
 
-  pop() {
+  dynamic pop() {
     return _navigationKey.currentState!.pop();
   }
 
@@ -12,7 +12,6 @@ class NavigationService {
     return _navigationKey.currentState!
         .pushNamed(routeName, arguments: arguments);
   }
-
 
   Future<dynamic> navigateToRoute(Widget route) {
     return _navigationKey.currentState!.push(
@@ -23,7 +22,6 @@ class NavigationService {
   }
 
   Future<bool> maybePop() {
-    return _navigationKey.currentState!
-        .maybePop();
+    return _navigationKey.currentState!.maybePop();
   }
 }

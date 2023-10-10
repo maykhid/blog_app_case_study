@@ -4,7 +4,8 @@ class ServerException implements Exception {
   final int? code;
 
   @override
-  String toString() => 'ServerException (Message >> $message - ErrorCode >> $code)';
+  String toString() =>
+      'ServerException (Message >> $message - ErrorCode >> $code)';
 }
 
 class ClientException implements Exception {
@@ -13,16 +14,14 @@ class ClientException implements Exception {
   final int? code;
 
   @override
-  String toString() => 'ClientException (Message >> $message - ErrorCode >> $code)';
+  String toString() =>
+      'ClientException (Message >> $message - ErrorCode >> $code)';
 }
 
 class LocalStorageException implements Exception {
   LocalStorageException(this.message);
   final String? message;
 
-
   @override
   String toString() => 'LocalStorageException (Message >> $message)';
 }
-
-

@@ -79,9 +79,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
 }
 
 class BottomItemIcon extends StatelessWidget {
-  const BottomItemIcon(
-      {Key? key, required this.color, required this.icon, this.height = 18})
-      : super(key: key);
+  const BottomItemIcon({
+    required this.color,
+    required this.icon,
+    super.key,
+    this.height = 18,
+  });
 
   final Color color;
   final double height;
@@ -90,11 +93,12 @@ class BottomItemIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 7.0),
+      padding: const EdgeInsets.only(bottom: 7),
       child: SizedBox(
-          height: height,
-          // padding: const EdgeInsets.only(bottom: 5),
-          child: Icon(icon)),
+        height: height,
+        // padding: const EdgeInsets.only(bottom: 5),
+        child: Icon(icon),
+      ),
     );
   }
 }
