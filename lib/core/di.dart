@@ -1,10 +1,10 @@
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/blog_posts_local_data_source.dart';
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/hive_blog_posts_local_data_source.dart';
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/blog_api.dart';
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/http_blog_api.dart';
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/blog_remote_data_source.dart';
-import 'package:blog_app_case_study/app/features/posts/data/repository/blog_posts_repository.dart';
-import 'package:blog_app_case_study/app/features/posts/domain/get_blog_posts_usecase.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/posts_local_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/hive_posts_local_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/posts_api.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/http_posts_api.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/posts_remote_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/repository/posts_repository.dart';
+import 'package:blog_app_case_study/app/features/posts/domain/get_posts_usecase.dart';
 import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/router/navigation_service.dart';
@@ -14,28 +14,25 @@ import 'package:hive_flutter/hive_flutter.dart';
 GetIt di = GetIt.instance;
 
 Future<void> setup() async {
-  di..registerLazySingleton<BlogApi>(HttpBlogApi.new)
-
-  ..registerLazySingleton<BlogPostsRemoteDataSource>(
-    () => BlogPostsRemoteDataSource(blogApi: di()),
-  )
-
-  ..registerLazySingleton<BlogPostsLocalDataSource>(
-    () => HiveBlogPostsLocalDataSource(postsBox: di(), authorsBox: di()),
-  )
-
-  ..registerLazySingleton<BlogPostsRepository>(
-    () => BlogPostsRepository(
-      blogPostsRemoteDataSource: di(),
-      blogPostsLocalDataSource: di(),
-    ),
-  )
-
-  ..registerLazySingleton<GetBlogPostsWithAuthorsUseCase>(
-    () => GetBlogPostsWithAuthorsUseCase(
-      blogPostsRepository: di(),
-    ),
-  );
+  di
+    ..registerLazySingleton<PostsApi>(HttpPostsApi.new)
+    ..registerLazySingleton<PostsRemoteDataSource>(
+      () => PostsRemoteDataSource(postsApi: di()),
+    )
+    ..registerLazySingleton<PostsLocalDataSource>(
+      () => HiveBlogPostsLocalDataSource(postsBox: di(), authorsBox: di()),
+    )
+    ..registerLazySingleton<PostsRepository>(
+      () => PostsRepository(
+        postsRemoteDataSource: di(),
+        postsLocalDataSource: di(),
+      ),
+    )
+    ..registerLazySingleton<GetPostsWithAuthorsUseCase>(
+      () => GetPostsWithAuthorsUseCase(
+        blogPostsRepository: di(),
+      ),
+    );
 
   // --- open and register posts box
   final postsBox = await Hive.openBox<PostsResponse>('postsBox');
@@ -43,8 +40,9 @@ Future<void> setup() async {
 
   // --- open and register users box
   final usersBox = await Hive.openBox<AuthorsResponse>('usersBox');
-  di..registerLazySingleton(() => usersBox)
+  di
+    ..registerLazySingleton(() => usersBox)
 
-  // core
-  ..registerLazySingleton(NavigationService.new);
+    // core
+    ..registerLazySingleton(NavigationService.new);
 }

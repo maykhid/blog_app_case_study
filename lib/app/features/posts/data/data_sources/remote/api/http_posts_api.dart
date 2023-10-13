@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/blog_api.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/posts_api.dart';
 import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/data/data_source/remote/api_configs.dart';
@@ -10,7 +10,7 @@ import 'package:blog_app_case_study/core/model/error/exception.dart'
     as customException;
 import 'package:http/http.dart' as http;
 
-class HttpBlogApi extends BlogApi {
+class HttpPostsApi extends PostsApi {
   final Map<String, String> _headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

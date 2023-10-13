@@ -1,10 +1,10 @@
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/blog_posts_local_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/posts_local_data_source.dart';
 import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/model/error/exception.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveBlogPostsLocalDataSource extends BlogPostsLocalDataSource {
+class HiveBlogPostsLocalDataSource extends PostsLocalDataSource {
   HiveBlogPostsLocalDataSource({
     required Box<PostsResponse> postsBox,
     required Box<AuthorsResponse> authorsBox,

@@ -1,6 +1,7 @@
-import 'package:blog_app_case_study/app/features/posts/ui/cubit/blog_post_cubit.dart';
+import 'package:blog_app_case_study/app/features/posts/ui/cubit/post_cubit.dart';
 import 'package:blog_app_case_study/app/features/posts/ui/views/screen/post_view_screen.dart';
 import 'package:blog_app_case_study/app/features/posts/ui/views/widgets/post_card.dart';
+import 'package:blog_app_case_study/app/shared/ui/widgets/spacing.dart';
 import 'package:blog_app_case_study/core/di.dart';
 import 'package:blog_app_case_study/core/router/navigation_service.dart';
 import 'package:blog_app_case_study/core/utils/enums.dart';
@@ -30,10 +31,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 8),
-        child: BlocProvider<BlogPostsCubit>(
-          create: (ctx) => BlogPostsCubit(getPostsWithAuthorsUseCase: di())
-            ..getPostsAuthors(),
-          child: BlocConsumer<BlogPostsCubit, BlogPostsState>(
+        child: BlocProvider<PostsCubit>(
+          create: (ctx) =>
+              PostsCubit(getPostsWithAuthorsUseCase: di())..getPostsAuthors(),
+          child: BlocConsumer<PostsCubit, PostsState>(
             listener: (context, state) {
               if (state.status == DataResponseStatus.error) {
                 // AppSnackBar.showErrorSnackBar(context, state.message!);
@@ -53,8 +54,21 @@ class HomeScreen extends StatelessWidget {
                 // on error
                 case DataResponseStatus.error:
                   return Center(
-                    child: Text(
-                      state.message!,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          state.message!,
+                        ),
+                        const VerticalSpace(
+                          size: 10,
+                        ),
+                        TextButton(
+                          onPressed: () =>
+                              context.read<PostsCubit>().getPostsAuthors(),
+                          child: const Text('Try again'),
+                        ),
+                      ],
                     ),
                   );
 
