@@ -1,69 +1,24 @@
-// import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
-// import 'package:dartz/dartz.dart';
-// import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:blog_app_case_study/app/features/posts/data/repository/posts_repository.dart';
+import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
+import 'package:blog_app_case_study/core/data/resource.dart';
 
-// import '../../../../../core/model/error/exception.dart';
-// import '../../../../../core/model/error/failure.dart';
-// import '../../../home/data/data_source/local/posts_dao.dart';
-// import '../../../home/data/data_source/remote/posts_remote_data_source.dart';
+class SearchPostsRepository {
+  SearchPostsRepository({required PostsRepository postsRepository})
+      : _postsRepository = postsRepository;
 
-// class SearchRepository {
-//   final PostsRemoteDataSource _postsRemoteDataSource;
-//   final PostsDao _postsDao;
+  final PostsRepository _postsRepository;
 
-//   SearchRepository(
-//       {required PostsRemoteDataSource postsRemoteDataSource, required PostsDao postsDao})
-//       : _postsRemoteDataSource = postsRemoteDataSource,
-//         _postsDao = postsDao;
-
-//   Future<Either<Failure, PostsResponse>> search(String searchTerm) async {
-//     try {
-//       List<Post> foundPosts = [];
-
-//       final postsResponse = await _postsRemoteDataSource.getPosts();
-
-//       // store posts locally
-//       _postsDao.cachePosts(posts: postsResponse);
-
-//       // search title
-//       foundPosts = postsResponse.posts
-//           .where((post) =>
-//               post.title.toLowerCase().contains(searchTerm.toLowerCase()))
-//           .toList();
-
-//       return Right(PostsResponse(posts: foundPosts));
-//     } on ServerException catch (_) {
-//       return Left(ServerFailure(message: _.message));
-//     }
-//   }
-
-//   Future<Either<Failure, PostsResponse>> searchOffline(
-//       String searchTerm) async {
-//     try {
-//       List<Post> foundPosts = List<Post>.empty();
-
-//       final cachedPosts = _postsDao.getCachedPosts()!;
-
-//       foundPosts = cachedPosts.posts
-//           .where((post) =>
-//               post.title.toLowerCase().contains(searchTerm.toLowerCase()))
-//           .toList();
-
-//       return Right(PostsResponse(posts: foundPosts));
-//     } on ServerException catch (_) {
-//       return Left(ServerFailure(message: _.message));
-//     }
-//   }
-
-//    Future<Either<Failure, PostsResponse>>
-//       seacrchLiveOrOfflinePosts(String searchTerm) async {
-//     bool hasConnection = await InternetConnectionChecker().hasConnection;
-//     bool isPostsCacheAvailable =
-//         _postsDao.isPostsCacheAvailable;
-
-//     if (!hasConnection && isPostsCacheAvailable) {
-//       return searchOffline(searchTerm);
-//     }
-//     return search(searchTerm);
-//   }
-// }
+  Future<Resource<PostsResponse>> searchPostByTitle({
+    required String searchTerm,
+  }) {
+    return _postsRepository.getPosts().then((resource) {
+      if (resource.isSuccess) {
+        final foundPosts = resource.data?.posts
+            .where((post) => post.title.toLowerCase().contains(searchTerm))
+            .toList();
+        return Resource.success(PostsResponse(posts: foundPosts!));
+      }
+      return Resource.failure(errorMessage: resource.errorMessage);
+    });
+  }
+}

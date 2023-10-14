@@ -1,5 +1,6 @@
 import 'package:blog_app_case_study/app/features/posts/domain/get_posts_usecase.dart';
 import 'package:blog_app_case_study/core/utils/enums.dart';
+import 'package:blog_app_case_study/core/utils/typedefs.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

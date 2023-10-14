@@ -1,7 +1,6 @@
 import 'package:blog_app_case_study/app/features/posts/data/repository/posts_repository.dart';
-import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
-import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/data/resource.dart';
+import 'package:blog_app_case_study/core/utils/typedefs.dart';
 
 class GetPostsWithAuthorsUseCase {
   const GetPostsWithAuthorsUseCase({
@@ -29,5 +28,3 @@ class GetPostsWithAuthorsUseCase {
     return Resource.success(postsWithAuthors);
   }
 }
-
-typedef PostsWithAuthors = ({List<Post>? posts, List<Author>? authors});
