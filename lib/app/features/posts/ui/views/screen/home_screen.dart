@@ -1,6 +1,7 @@
 import 'package:blog_app_case_study/app/features/posts/ui/cubit/post_cubit.dart';
 import 'package:blog_app_case_study/app/features/posts/ui/views/screen/post_view_screen.dart';
 import 'package:blog_app_case_study/app/features/posts/ui/views/widgets/post_card.dart';
+import 'package:blog_app_case_study/app/features/search/ui/views/screen/posts_search_delegate.dart';
 import 'package:blog_app_case_study/app/shared/ui/widgets/spacing.dart';
 import 'package:blog_app_case_study/core/di.dart';
 import 'package:blog_app_case_study/core/router/navigation_service.dart';
@@ -21,10 +22,10 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // showSearch(
-              //   context: context,
-              //   delegate: CustomSearchDelegate(),
-              // );
+              showSearch(
+                context: context,
+                delegate: PostsSearchDelegate(),
+              );
             },
           ),
         ],
@@ -33,7 +34,7 @@ class HomeScreen extends StatelessWidget {
         minimum: const EdgeInsets.symmetric(horizontal: 8),
         child: BlocProvider<PostsCubit>(
           create: (ctx) =>
-              PostsCubit(getPostsWithAuthorsUseCase: di())..getPostsAuthors(),
+              PostsCubit(getPostsWithAuthorsUseCase: di())..getPosts(),
           child: BlocConsumer<PostsCubit, PostsState>(
             listener: (context, state) {
               if (state.status == DataResponseStatus.error) {
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 // processing
                 case DataResponseStatus.processing:
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator.adaptive(),
                   );
 
                 // on error
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () =>
-                              context.read<PostsCubit>().getPostsAuthors(),
+                              context.read<PostsCubit>().getPosts(),
                           child: const Text('Try again'),
                         ),
                       ],

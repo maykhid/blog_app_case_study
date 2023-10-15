@@ -14,7 +14,7 @@ class PostsCubit extends Cubit<PostsState> {
 
   final GetPostsWithAuthorsUseCase _getPostsWithAuthorsUseCase;
 
-  Future<void> getPostsAuthors() async {
+  Future<void> getPosts() async {
     emit(const PostsState.processing());
 
     final response = await _getPostsWithAuthorsUseCase();
