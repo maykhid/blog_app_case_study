@@ -2,6 +2,7 @@ import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/app/shared/ui/extensions/sized_context.dart';
 import 'package:blog_app_case_study/app/shared/ui/widgets/spacing.dart';
+import 'package:blog_app_case_study/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class PostView extends StatefulWidget {
@@ -47,13 +48,15 @@ class _PostViewState extends State<PostView> {
               width: context.width,
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(8),
-                  image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/images/dummy.jpg',
-                      ),
-                      fit: BoxFit.cover,),),
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(8),
+                image: const DecorationImage(
+                  image: AssetImage(
+                    'assets/images/dummy.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
 
             const VerticalSpace(
@@ -61,7 +64,7 @@ class _PostViewState extends State<PostView> {
             ),
 
             SizedBox(
-              height: 50,
+              // height: 50,
               width: context.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,15 +73,24 @@ class _PostViewState extends State<PostView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: context.width * 0.60,
+                        width: context.width * 0.7,
                         // height: 60,
-                        child: Text(
-                          post.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700,),
+                        child: Wrap(
+                          children: [
+                            Text(
+                              post.title,
+                              // overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 8,
                       ),
                       Text(
                         authors[post.userId - 1].name,
@@ -90,45 +102,21 @@ class _PostViewState extends State<PostView> {
                     ],
                   ),
 
-                  //
-                  SizedBox(
-                    // width: 40,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          // onPressed: () => SocialShare.shareOptions(
-                          //     'Read this blog post by: ${users.users[post.userId - 1].name}\n\n ${post.body} \n\n https://blogpost.inapp.url'),
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.share,
-                            color: Colors.teal,
-                            size: 30,
-                          ),
-                        ),
-                        const HorizontalSpace(
-                          size: 25,
-                        ),
+                  const Spacer(),
 
-                        // bookmark button
-                        // IconButton(
-                        //   onPressed: () =>
-                        //       _isPostBookmarked(bookmarkedPosts)
-                        //           ? _handleRemoveBookmark(
-                        //               context.read<BookmarkPostsCubit>(),
-                        //               bookmarkedPosts)
-                        //           : _handleBookmark(
-                        //               context.read<BookmarkPostsCubit>()),
-                        //   icon: Icon(
-                        //     Icons.bookmark,
-                        //     size: 30,
-                        //     color: _isPostBookmarked(bookmarkedPosts)
-                        //         ? Colors.teal
-                        //         : Colors.black.withOpacity(0.4),
-                        //   ),
-                        // ),
-                      ],
+                  //
+                  IconButton(
+                    // onPressed: () => SocialShare.shareOptions(
+                    //     'Read this blog post by: ${users.users[post.userId - 1].name}\n\n ${post.body} \n\n https://blogpost.inapp.url'),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.share,
+                      color: Colors.teal,
+                      size: 30,
                     ),
+                  ),
+                  const HorizontalSpace(
+                    size: 25,
                   ),
                 ],
               ),
@@ -140,7 +128,7 @@ class _PostViewState extends State<PostView> {
 
             Expanded(
               child: Text(
-                '${post.body} ${post.body}',
+                '''${post.body.capitalizeFirstLetter}. ${post.body.capitalizeFirstLetter}''',
                 style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.start,
               ),
@@ -150,17 +138,4 @@ class _PostViewState extends State<PostView> {
       ),
     );
   }
-
-  // bool _isPostBookmarked(posts) => posts.contains(post);
-
-  // void _handleBookmark(BookmarkPostsCubit bookmarkCubit) => bookmarkCubit
-  //   ..bookmarkPost(post)
-  //   ..getBookmarkedPosts();
-
-  // _handleRemoveBookmark(BookmarkPostsCubit cubit, List<Post> posts) {
-  //   int index = posts.indexWhere((p) => p == post);
-  //   cubit
-  //     ..clearBookmarkedPost(index)
-  //     ..getBookmarkedPosts();
-  // }
 }
