@@ -1,4 +1,5 @@
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/hive_posts_local_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/dao/hive_posts_dao.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/dao/posts_dao.dart';
 import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/posts_local_data_source.dart';
 import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/http_posts_api.dart';
 import 'package:blog_app_case_study/app/features/posts/data/data_sources/remote/api/posts_api.dart';
@@ -18,11 +19,14 @@ GetIt di = GetIt.instance;
 Future<void> setup() async {
   di
     ..registerLazySingleton<PostsApi>(HttpPostsApi.new)
+    ..registerLazySingleton<PostsDao>(
+      () => HivePostsDao(authorsBox: di(), postsBox: di()),
+    )
     ..registerLazySingleton<PostsRemoteDataSource>(
       () => PostsRemoteDataSource(postsApi: di()),
     )
     ..registerLazySingleton<PostsLocalDataSource>(
-      () => HiveBlogPostsLocalDataSource(postsBox: di(), authorsBox: di()),
+      () => PostsLocalDataSource(postsDao: di()),
     )
     ..registerLazySingleton<PostsRepository>(
       () => PostsRepository(

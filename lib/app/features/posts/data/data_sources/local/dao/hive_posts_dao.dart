@@ -1,11 +1,12 @@
-import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/posts_local_data_source.dart';
+import 'package:blog_app_case_study/app/features/posts/data/data_sources/local/dao/posts_dao.dart';
 import 'package:blog_app_case_study/app/shared/data/models/authors_response.dart';
 import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/data/model/error/exception.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 
-class HiveBlogPostsLocalDataSource extends PostsLocalDataSource {
-  HiveBlogPostsLocalDataSource({
+class HivePostsDao implements PostsDao {
+
+  HivePostsDao({
     required Box<PostsResponse> postsBox,
     required Box<AuthorsResponse> authorsBox,
   })  : _postsBox = postsBox,

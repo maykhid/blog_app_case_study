@@ -7,7 +7,6 @@ class PostsRemoteDataSource {
       : _postApi = postsApi;
 
   final PostsApi _postApi;
-
   Future<PostsResponse> getPosts() => _postApi.getPosts();
   Future<AuthorsResponse> getAuthors() => _postApi.getAuthors();
 }

@@ -17,12 +17,12 @@ class PostsRepository {
   Future<Resource<PostsResponse>> getPosts() async {
     try {
       final response = await _postsRemoteDataSource.getPosts();
-      _postsLocalDataSource.cachePosts(posts: response);
+      _postsLocalDataSource.updatePosts(posts: response);
 
-      return Resource.success(_postsLocalDataSource.getCachedPosts());
+      return Resource.success(_postsLocalDataSource.getPosts());
     } catch (e) {
-      if (_postsLocalDataSource.isPostsCacheAvailable) {
-        return Resource.success(_postsLocalDataSource.getCachedPosts());
+      if (_postsLocalDataSource.isPostsAvailable) {
+        return Resource.success(_postsLocalDataSource.getPosts());
       }
       return Resource.failure(errorMessage: e.toString());
     }
@@ -31,12 +31,12 @@ class PostsRepository {
   Future<Resource<AuthorsResponse>> getAuthors() async {
     try {
       final response = await _postsRemoteDataSource.getAuthors();
-      _postsLocalDataSource.cacheAuthors(authors: response);
+      _postsLocalDataSource.updateAuthors(authors: response);
 
-      return Resource.success(_postsLocalDataSource.getCachedAuthors());
+      return Resource.success(_postsLocalDataSource.getAuthors());
     } catch (e) {
-      if (_postsLocalDataSource.isAuthorsCacheAvailable) {
-        return Resource.success(_postsLocalDataSource.getCachedAuthors());
+      if (_postsLocalDataSource.isAuthorsAvailable) {
+        return Resource.success(_postsLocalDataSource.getAuthors());
       }
       return Resource.failure(errorMessage: e.toString());
     }
