@@ -38,6 +38,8 @@ dependencies:
   hive_flutter:
   http: ^1.1.0
   internet_connection_checker: ^1.0.0+1
+  mockito: ^5.4.2
+  mocktail: ^1.0.1
   very_good_analysis: ^5.1.0
 
 dev_dependencies:
