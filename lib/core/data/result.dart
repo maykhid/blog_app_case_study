@@ -1,11 +1,11 @@
-class Resource<T> {
-  Resource._(this.data);
+class Result<T> {
+  Result._(this.data);
 
-  factory Resource.success(T? data) = _Success<T>;
+  factory Result.success(T? data) = _Success<T>;
 
-  factory Resource.failure({String? errorMessage, T? data}) = _Failure<T>;
+  factory Result.failure({String? errorMessage, T? data}) = _Failure<T>;
 
-  factory Resource.loading() = _Loading<T>;
+  factory Result.loading() = _Loading<T>;
 
   bool get isSuccess => this is _Success<T>;
   bool get isLoading => this is _Loading<T>;
@@ -22,15 +22,15 @@ class Resource<T> {
   }
 }
 
-class _Success<T> extends Resource<T> {
+class _Success<T> extends Result<T> {
   _Success(super.data) : super._();
 }
 
-class _Loading<T> extends Resource<T> {
+class _Loading<T> extends Result<T> {
   _Loading() : super._(null);
 }
 
-class _Failure<T> extends Resource<T> {
+class _Failure<T> extends Result<T> {
   _Failure({this.errorMessage, T? data}) : super._(data);
 
   @override
