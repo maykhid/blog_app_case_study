@@ -8,6 +8,10 @@ import 'package:blog_app_case_study/core/utils/extensions.dart';
 import 'package:http/http.dart' as http;
 
 class HttpPostsApi implements PostsApi {
+  HttpPostsApi({required http.Client client}) : _client = client;
+
+  final http.Client _client;
+
   final Map<String, String> _headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -19,7 +23,7 @@ class HttpPostsApi implements PostsApi {
   @override
   Future<AuthorsResponse> getAuthors() async {
     try {
-      final response = await http.get(
+      final response = await _client.get(
         Uri.https(ApiConfigs.jsonPlaceholderUrl, _usersPath),
         headers: _headers,
       );
@@ -32,7 +36,7 @@ class HttpPostsApi implements PostsApi {
   @override
   Future<PostsResponse> getPosts() async {
     try {
-      final response = await http.get(
+      final response = await _client.get(
         Uri.https(ApiConfigs.jsonPlaceholderUrl, _postsPath),
         headers: _headers,
       );

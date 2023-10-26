@@ -13,12 +13,13 @@ import 'package:blog_app_case_study/app/shared/data/models/posts_response.dart';
 import 'package:blog_app_case_study/core/router/navigation_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart';
 
 GetIt di = GetIt.instance;
 
 Future<void> setup() async {
   di
-    ..registerLazySingleton<PostsApi>(HttpPostsApi.new)
+    ..registerLazySingleton<PostsApi>(() => HttpPostsApi(client: Client()))
     ..registerLazySingleton<PostsDao>(
       () => HivePostsDao(authorsBox: di(), postsBox: di()),
     )
