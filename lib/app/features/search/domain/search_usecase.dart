@@ -14,20 +14,20 @@ class SearchPostsWithAuthorsUseCase {
   final PostsRepository _postsRepository;
 
   Future<Result<PostsWithAuthors>> call(String searchTerm) async {
-    final authorsResource = await _postsRepository.getAuthors();
-    final searchResource =
+    final authorsResult = await _postsRepository.getAuthors();
+    final searchResult =
         await _searchPostsRepository.searchPostByTitle(searchTerm: searchTerm);
 
-    if (searchResource.isFailure) {
-      return Result.failure(errorMessage: searchResource.errorMessage);
+    if (searchResult.isFailure) {
+      return Result.failure(errorMessage: searchResult.errorMessage);
     }
 
-    if (authorsResource.isFailure) {
-      return Result.failure(errorMessage: authorsResource.errorMessage);
+    if (authorsResult.isFailure) {
+      return Result.failure(errorMessage: authorsResult.errorMessage);
     }
 
-    final authors = authorsResource.data?.users;
-    final posts = searchResource.data?.posts;
+    final authors = authorsResult.data?.users;
+    final posts = searchResult.data?.posts;
 
     final postsWithAuthors = (posts: posts, authors: authors);
     return Result.success(postsWithAuthors);
