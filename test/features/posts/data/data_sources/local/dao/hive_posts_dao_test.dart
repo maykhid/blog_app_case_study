@@ -21,7 +21,7 @@ import 'hive_posts_dao_test.mocks.dart';
 ])
 void main() {
   const mockAuthors = AuthorsResponse(users: []);
-  final mockPosts = PostsResponse(posts: const []);
+  const mockPosts = PostsResponse(posts: []);
 
   const postsKey = '__posts__key__';
   const authorsKey = '__authors__key__';

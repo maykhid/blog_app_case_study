@@ -7,7 +7,7 @@ part 'posts_response.g.dart';
 ///
 @HiveType(typeId: 0)
 class PostsResponse extends Equatable {
-  PostsResponse({required this.posts});
+  const PostsResponse({required this.posts});
 
   factory PostsResponse.fromJson(List<dynamic> data) => PostsResponse(
         posts: List<Post>.from(

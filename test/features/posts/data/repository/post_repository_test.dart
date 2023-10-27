@@ -24,17 +24,17 @@ void main() {
 
   test('get posts', () async {
     when(mockPostsRemoteDataSource.getPosts()).thenAnswer((_) {
-      return Future.value(PostsResponse(posts: const []));
+      return Future.value(const PostsResponse(posts: []));
     });
 
     when(
       mockPostsLocalDataSource.updatePosts(
-        posts: PostsResponse(posts: const []),
+        posts: const PostsResponse(posts: []),
       ),
     ).thenAnswer((_) {});
 
     when(mockPostsLocalDataSource.getPosts()).thenAnswer((_) {
-      return PostsResponse(posts: const []);
+      return const PostsResponse(posts: []);
     });
 
     final response = await postsRepository.getPosts();
@@ -43,11 +43,11 @@ void main() {
     verify(mockPostsLocalDataSource.getPosts()).called(1);
     verify(
       mockPostsLocalDataSource.updatePosts(
-        posts: PostsResponse(posts: const []),
+        posts: const PostsResponse(posts: []),
       ),
     ).called(1);
 
-    expect(response.data, PostsResponse(posts: const []));
+    expect(response.data, const PostsResponse(posts: []));
   });
 
   test('get authors', () async {
@@ -89,7 +89,7 @@ void main() {
     when(mockPostsLocalDataSource.isPostsAvailable).thenAnswer((_) => true);
 
     when(mockPostsLocalDataSource.getPosts()).thenAnswer((_) {
-      return PostsResponse(posts: const []);
+      return const PostsResponse(posts: []);
     });
 
     final response = await postsRepository.getPosts();
@@ -97,7 +97,7 @@ void main() {
     verify(mockPostsRemoteDataSource.getPosts()).called(1);
     verify(mockPostsLocalDataSource.getPosts()).called(1);
 
-    expect(response.data, PostsResponse(posts: const []));
+    expect(response.data, const PostsResponse(posts: []));
   });
 
   test('get local authors if remote fails', () async {

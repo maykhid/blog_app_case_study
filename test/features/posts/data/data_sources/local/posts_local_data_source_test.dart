@@ -15,7 +15,7 @@ void main() {
   final mockHivePostDao = MockHivePostsDao();
   final postsLocalDataSource = PostsLocalDataSource(postsDao: mockHivePostDao);
   const mockAuthors = AuthorsResponse(users: []);
-  final mockPosts = PostsResponse(posts: const []);
+  const mockPosts = PostsResponse(posts: []);
 
   group('Test Posts Local Data Source', () {
     test('-- update Authors', () {
