@@ -6,7 +6,7 @@ part 'posts_response.g.dart';
 /// Posts class with List<Post> param
 ///
 @HiveType(typeId: 0)
-class PostsResponse {
+class PostsResponse extends Equatable {
   PostsResponse({required this.posts});
 
   factory PostsResponse.fromJson(List<dynamic> data) => PostsResponse(
@@ -15,10 +15,13 @@ class PostsResponse {
         ),
       );
   @HiveField(0)
-  List<Post> posts;
+  final List<Post> posts;
 
   @override
   String toString() => posts.toString();
+
+  @override
+  List<Object?> get props => [posts];
 }
 
 /// Post class

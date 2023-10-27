@@ -20,8 +20,8 @@ import 'hive_posts_dao_test.mocks.dart';
   MockSpec<Box>(),
 ])
 void main() {
-  final mockAuthors = AuthorsResponse(users: []);
-  final mockPosts = PostsResponse(posts: []);
+  const mockAuthors = AuthorsResponse(users: []);
+  final mockPosts = PostsResponse(posts: const []);
 
   const postsKey = '__posts__key__';
   const authorsKey = '__authors__key__';

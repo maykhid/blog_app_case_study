@@ -20,8 +20,8 @@ class Author extends Equatable {
 }
 
 @HiveType(typeId: 4)
-class AuthorsResponse {
-  AuthorsResponse({required this.users});
+class AuthorsResponse extends Equatable {
+  const AuthorsResponse({required this.users});
 
   factory AuthorsResponse.fromJson(List<dynamic> data) => AuthorsResponse(
         users: List<Author>.from(
@@ -30,8 +30,11 @@ class AuthorsResponse {
       );
 
   @HiveField(0)
-  List<Author> users;
+  final List<Author> users;
 
   @override
   String toString() => users.toString();
+
+  @override
+  List<Object?> get props => [users];
 }
