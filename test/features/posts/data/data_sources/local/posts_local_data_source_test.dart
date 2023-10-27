@@ -14,8 +14,8 @@ import 'posts_local_data_source_test.mocks.dart';
 void main() {
   final mockHivePostDao = MockHivePostsDao();
   final postsLocalDataSource = PostsLocalDataSource(postsDao: mockHivePostDao);
-  final mockAuthors = AuthorsResponse(users: []);
-  final mockPosts = PostsResponse(posts: []);
+  const mockAuthors = AuthorsResponse(users: []);
+  final mockPosts = PostsResponse(posts: const []);
 
   group('Test Posts Local Data Source', () {
     test('-- update Authors', () {
