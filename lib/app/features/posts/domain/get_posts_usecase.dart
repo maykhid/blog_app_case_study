@@ -10,19 +10,19 @@ class GetPostsWithAuthorsUseCase {
   final PostsRepository _postsRepository;
 
   Future<Result<PostsWithAuthors>> call() async {
-    final authorsResource = await _postsRepository.getAuthors();
-    final postsResource = await _postsRepository.getPosts();
+    final authorsResult = await _postsRepository.getAuthors();
+    final postsResult = await _postsRepository.getPosts();
 
-    if (postsResource.isFailure) {
-      return Result.failure(errorMessage: postsResource.errorMessage);
+    if (postsResult.isFailure) {
+      return Result.failure(errorMessage: postsResult.errorMessage);
     }
 
-    if (authorsResource.isFailure) {
-      return Result.failure(errorMessage: authorsResource.errorMessage);
+    if (authorsResult.isFailure) {
+      return Result.failure(errorMessage: authorsResult.errorMessage);
     }
 
-    final authors = authorsResource.data?.users;
-    final posts = postsResource.data?.posts;
+    final authors = authorsResult.data?.users;
+    final posts = postsResult.data?.posts;
 
     final postsWithAuthors = (posts: posts, authors: authors);
     return Result.success(postsWithAuthors);
