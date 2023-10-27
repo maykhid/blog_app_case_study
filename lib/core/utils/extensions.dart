@@ -17,7 +17,7 @@ extension HttpResponseX on http.Response {
   dynamic get handleResponse {
     if (statusCode == 200) {
       return jsonDecode(body);
-    } else if (statusCode >= 400 && statusCode <= 404) {
+    } else if (statusCode >= 400 || statusCode <= 404) {
       throw ClientException(
         'Client Exception: $reasonPhrase',
         statusCode,
